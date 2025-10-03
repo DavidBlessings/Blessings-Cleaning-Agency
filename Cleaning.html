@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blessings Cleaning Agency - Sparkling Clean, Blessed Home</title>
+    <!-- NEW: Favicon Link -->
+    <link rel="icon" type="image/png" href="https://placehold.co/32x32/1e40af/fbbf24?text=B" />
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for the elegant gold/blue aesthetic */
+        :root {
+            --color-primary: #1e40af; /* Deep Blue */
+            --color-accent: #fbbf24; /* Amber/Gold */
+            --color-whatsapp: #25d366; /* WhatsApp Green */
+        }
+        .text-primary { color: var(--color-primary); }
+        .bg-primary { background-color: var(--color-primary); }
+        .text-accent { color: var(--color-accent); }
+        .bg-accent { background-color: var(--color-accent); }
+        .border-accent { border-color: var(--color-accent); }
+
+        /* Row 1: Circle Shape for Gallery Images */
+        .circle-clip {
+            /* Use 50% border-radius for a perfect circle/ellipse */
+            border-radius: 50% !important; 
+            /* Remove clip-path as border-radius achieves the desired shape */
+            clip-path: none; 
+        }
+
+        /* Row 2: Kite Shape Clip for Gallery Images */
+        .kite-clip {
+            /* Defines a diamond/kite shape using a four-point polygon */
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            /* Ensure the corner rounding doesn't interfere */
+            border-radius: 0 !important; 
+        }
+        
+        /* IMPORTANT: Removed smooth scrolling as navigation is now modal-based */
+        html {
+            scroll-behavior: auto; 
+            scroll-padding-top: 0;
+        }
+
+        /* Font and default styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937; /* Dark text for readability */
+        }
+        
+        /* Custom button style with gold glow/accent */
+        .btn-gold {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .btn-gold:hover {
+            box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.3), 0 4px 6px -4px rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Styling for the Floating WhatsApp Button */
+        #whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            line-height: 0; 
+            text-align: center;
+            background-color: var(--color-whatsapp);
+            color: white;
+            border-radius: 50%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #whatsapp-float:hover {
+            background-color: #128c7e; /* Darker WhatsApp green on hover */
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto; /* Allows scrolling inside the modal */
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+            width: 800px;
+            max-height: 90vh; /* Limits modal height to viewport */
+            overflow-y: auto;
+            position: relative;
+            margin-top: 80px; /* Space for the sticky header */
+            margin-bottom: 20px;
+        }
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            line-height: 1;
+            color: #1f2937;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close-btn:hover {
+            color: var(--color-accent);
+        }
+
+        /* --- NEW: Auto Scroll Animation for Hero Images --- */
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Scroll exactly half the content (one full set of images) */
+        }
+        
+        .auto-scroll-container {
+            /* 40 seconds for a full loop, continuous, linear speed */
+            animation: scroll-left 40s linear infinite; 
+            will-change: transform;
+            display: inline-flex; /* Ensure it stays inline-flex */
+        }
+        
+        /* Override default overflow on the wrapper for the animation */
+        #hero .overflow-x-scroll {
+             overflow: hidden !important; 
+             width: 100%; /* Ensure it takes full width for calculation */
+        }
+        /* --- END Auto Scroll Animation CSS --- */
+    </style>
+    <!-- Use Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body class="antialiased bg-white">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-primary shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo/Agency Name with Image -->
+            <div class="flex items-center">
+                <img src="C:\Users\d.blessings\Desktop/Logo.JPEG" alt="Blessings Cleaning Logo" class="w-14 h-14 rounded-lg mr-3 shadow-md">
+                <div class="text-2xl font-bold text-white tracking-wider">
+                    <span class="text-accent">Blessings</span> Cleaning
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Toggle (Hidden on larger screens) -->
+            <button id="menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+            
+            <!-- Desktop Navigation - UPDATED TO USE JAVASCRIPT OPEN MODAL FUNCTIONS -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#hero" class="text-white hover:text-accent transition duration-300 font-medium">Home</a>
+                <!-- Opens Services Modal -->
+                <a href="javascript:void(0)" onclick="openModal('modal-services')" class="text-white hover:text-accent transition duration-300 font-medium">Services</a>
+                <!-- NEW: Opens Gallery Modal -->
+                <a href="javascript:void(0)" onclick="openModal('modal-gallery')" class="text-white hover:text-accent transition duration-300 font-medium">Gallery</a>
+                <!-- Opens About Us Modal -->
+                <a href="javascript:void(0)" onclick="openModal('modal-about')" class="text-white hover:text-accent transition duration-300 font-medium">About Us</a>
+                <!-- NEW: Contact opens the new Contact Info modal -->
+                <a href="javascript:void(0)" onclick="openModal('modal-contact-info')" class="text-white hover:text-accent transition duration-300 font-medium">Contact</a>
+                <!-- Opens Quote Modal -->
+                <a href="javascript:void(0)" onclick="openModal('modal-quote')" class="bg-accent text-primary px-4 py-2 rounded-full font-semibold hover:bg-white transition duration-300 ml-4">Get a Quote</a>
+            </nav>
+        </div>
+        
+        <!-- Mobile Menu (Hidden by default) - UPDATED TO USE JAVASCRIPT OPEN MODAL FUNCTIONS -->
+        <nav id="mobile-menu" class="hidden md:hidden bg-primary pb-4 text-center">
+            <a href="#hero" class="block text-white hover:bg-blue-900 py-2 transition duration-300 font-medium border-t border-blue-900">Home</a>
+            <a href="javascript:void(0)" onclick="openModal('modal-services')" class="block text-white hover:bg-blue-900 py-2 transition duration-300 font-medium border-t border-blue-900">Services</a>
+            <!-- NEW: Opens Gallery Modal -->
+            <a href="javascript:void(0)" onclick="openModal('modal-gallery')" class="block text-white hover:bg-blue-900 py-2 transition duration-300 font-medium border-t border-blue-900">Gallery</a>
+            <a href="javascript:void(0)" onclick="openModal('modal-about')" class="block text-white hover:bg-blue-900 py-2 transition duration-300 font-medium border-t border-blue-900">About Us</a>
+            <!-- NEW: Contact opens the new Contact Info modal -->
+            <a href="javascript:void(0)" onclick="openModal('modal-contact-info')" class="block text-white hover:bg-blue-900 py-2 transition duration-300 font-medium border-t border-blue-900">Contact</a>
+            <a href="javascript:void(0)" onclick="openModal('modal-quote')" class="block bg-accent text-primary px-4 py-2 mt-2 mx-4 rounded-lg font-semibold hover:bg-white transition duration-300">Get a Quote</a>
+        </nav>
+    </header>
+
+    <!-- Home Section (Remains visible as background and is now scrollable) -->
+    <section id="hero" class="bg-primary pt-20 pb-24 md:py-32 relative overflow-hidden min-h-screen">
+        <!-- Background decorative elements for elegance -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-accent opacity-10 rounded-full blur-3xl transform translate-x-1/4 -translate-y-1/4"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full blur-3xl transform -translate-x-1/4 translate-y-1/4"></div>
+
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-4 leading-tight">
+                <span class="block">Sparkling Clean,</span> 
+                <span class="text-accent">Blessed Home.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white opacity-90 mb-8 max-w-3xl mx-auto">
+                Experience the highest standard of cleanliness and care for your space. We bring blessings of order and hygiene right to your door.
+            </p>
+            <!-- Updated to open quote modal -->
+            <a href="javascript:void(0)" onclick="openModal('modal-quote')" class="inline-block px-12 py-4 bg-accent text-primary text-xl font-bold rounded-full uppercase tracking-wider btn-gold">
+                Book Your First Cleaning
+            </a>
+            <p class="text-sm mt-4 text-white opacity-75">
+                Satisfaction Guaranteed. Fully Insured.
+            </p>
+
+            <!-- UPDATED: Horizontal Scroll Image Strip for Hero Section with Auto-Scroll -->
+            <div class="mt-12 max-w-full mx-auto py-4 scrollbar-hide overflow-hidden">
+                <!-- Outer container to hide overflow and apply animation -->
+                <div class="auto-scroll-container">
+                    <!-- Set 1 of 6 images -->
+                    <div class="inline-flex space-x-4 pb-2">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Office" alt="Office Cleaning" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Home" alt="Home Cleaning" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Kitchen" alt="Kitchen Detail" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Window" alt="Window Shine" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Team" alt="Cleaning Team" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Before" alt="Before/After" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                    </div>
+                    <!-- Set 2 of 6 images (Duplicate for seamless loop) -->
+                    <div class="inline-flex space-x-4 pb-2">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Office" alt="Office Cleaning" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Home" alt="Home Cleaning" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Kitchen" alt="Kitchen Detail" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Window" alt="Window Shine" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Team" alt="Cleaning Team" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                        <img src="https://placehold.co/200x120/fbbf24/1e40af?text=Before" alt="Before/After" class="w-[200px] h-[120px] object-cover rounded-lg shadow-lg border-2 border-white transform hover:scale-[1.02] transition duration-300 flex-shrink-0">
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- NEW: Testimonials Grid Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12">
+                What Our Clients <span class="text-accent">Say</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="p-6 bg-gray-50 rounded-xl shadow-lg border-t-4 border-accent">
+                    <p class="text-lg italic text-gray-700 mb-4">
+                        "The deep cleaning service was flawless. They transformed our kitchen and bathrooms—it was money well spent! Highly recommend Blessings Cleaning for professionalism and results."
+                    </p>
+                    <p class="text-primary font-semibold">- Kenneth T., Commercial Client</p>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="p-6 bg-gray-50 rounded-xl shadow-lg border-t-4 border-primary">
+                    <p class="text-lg italic text-gray-700 mb-4">
+                        "I hired them for a move-out clean and got my full deposit back with zero hassle. They are punctual, thorough, and incredibly kind. A truly blessed experience!"
+                    </p>
+                    <p class="text-primary font-semibold">- Sarah M., Residential Client</p>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="p-6 bg-gray-50 rounded-xl shadow-lg border-t-4 border-accent">
+                    <blockquote class="text-lg italic text-gray-700 mb-4">
+                        "Blessings Cleaning Agency truly transformed my home. The attention to detail was incredible, and their team was so professional and kind. It felt like walking into a brand new, organized space."
+                    </blockquote>
+                    <p class="text-primary font-semibold">- Maria G., Local Resident</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-primary pt-12 pb-6">
+        <div class="container mx-auto px-4 text-white">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                
+                <!-- Column 1: Brand -->
+                <div>
+                    <h5 class="text-2xl font-bold mb-4 text-accent">Blessings Cleaning</h5>
+                    <p class="text-sm opacity-80">Committed to providing pristine and trusted cleaning services for homes and businesses.</p>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h5 class="text-lg font-semibold mb-4 border-b border-accent pb-1">Quick Links</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="javascript:void(0)" onclick="openModal('modal-services')" class="hover:text-accent transition duration-300">Services</a></li>
+                        <!-- Gallery Link Re-added -->
+                        <li><a href="javascript:void(0)" onclick="openModal('modal-gallery')" class="hover:text-accent transition duration-300">Gallery</a></li>
+                        <li><a href="javascript:void(0)" onclick="openModal('modal-about')" class="hover:text-accent transition duration-300">About Us</a></li>
+                        <li><a href="javascript:void(0)" onclick="openModal('modal-contact-info')" class="hover:text-accent transition duration-300">Contact Details</a></li>
+                        <li><a href="javascript:void(0)" onclick="openModal('modal-quote')" class="hover:text-accent transition duration-300">Get a Quote</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <!-- Copyright -->
+            <div class="text-center pt-8 border-t border-blue-700">
+                <p class="text-sm opacity-60">&copy; 2025 Blessings Cleaning Agency. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALS SECTION -->
+
+    <!-- 1. Services Modal -->
+    <div id="modal-services" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeModal('modal-services')">&times;</span>
+            <section class="py-4">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12">
+                    Our <span class="text-accent">Exceptional</span> Services
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Service Card 1: Residential Deep Cleaning -->
+                    <div class="bg-gray-50 p-6 md:p-8 rounded-xl shadow-lg border-t-4 border-accent">
+                        <!-- UPDATED: Replaced emoji with placeholder image -->
+                        <img src="https://placehold.co/60x60/fbbf24/1e40af?text=HOME" alt="Residential Cleaning Icon" class="w-12 h-12 mb-4 mx-auto md:mx-0 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-primary">Residential Deep Cleaning</h3>
+                        <p class="text-gray-600">
+                            From studio apartments to large family homes, we cover every nook and cranny. Includes dusting, vacuuming, floor washing, kitchen sanitization, and bathroom scrubbing.
+                        </p>
+                        <a href="javascript:void(0)" onclick="openModal('modal-quote')" class="block mt-4 text-primary font-semibold hover:text-accent">Get a Quote &rarr;</a>
+                    </div>
+
+                    <!-- Service Card 2: Commercial & Office Spaces -->
+                    <div class="bg-gray-50 p-6 md:p-8 rounded-xl shadow-lg border-t-4 border-primary">
+                        <!-- UPDATED: Replaced emoji with placeholder image -->
+                        <img src="https://placehold.co/60x60/fbbf24/1e40af?text=OFFICE" alt="Commercial Cleaning Icon" class="w-12 h-12 mb-4 mx-auto md:mx-0 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-primary">Commercial & Office Spaces</h3>
+                        <p class="text-gray-600">
+                            Maintain a professional and healthy work environment. We offer flexible scheduling for routine office cleaning, ensuring minimal disruption to your business operations.
+                        </p>
+                        <a href="javascript:void(0)" onclick="openModal('modal-quote')" class="block mt-4 text-primary font-semibold hover:text-accent">Get a Custom Plan &rarr;</a>
+                    </div>
+
+                    <!-- Service Card 3: Move-In/Move-Out Service -->
+                    <div class="bg-gray-50 p-6 md:p-8 rounded-xl shadow-lg border-t-4 border-accent">
+                        <!-- UPDATED: Replaced emoji with placeholder image -->
+                        <img src="https://placehold.co/60x60/fbbf24/1e40af?text=MOVE" alt="Move Cleaning Icon" class="w-12 h-12 mb-4 mx-auto md:mx-0 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-primary">Move-In/Move-Out Service</h3>
+                        <p class="text-gray-600">
+                            The ultimate clean to prepare a property for a new occupant or to ensure you get your full security deposit back. Detailed attention to appliances, inside cabinets, and windows.
+                        </p>
+                        <a href="javascript:void(0)" onclick="openModal('modal-quote')" class="block mt-4 text-primary font-semibold hover:text-accent">Get a Quote &rarr;</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 2. About Us Modal -->
+    <div id="modal-about" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeModal('modal-about')">&times;</span>
+            <section class="py-4">
+                <div class="max-w-4xl mx-auto text-center">
+                     <h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-4">
+                        Why Choose <span class="text-accent">Blessings</span>?
+                    </h2>
+                    <p class="text-xl text-gray-700 mb-12">
+                        We combine professional rigor with a commitment to kindness and reliability.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Feature 1 -->
+                    <div class="p-6 bg-blue-50 rounded-lg text-center shadow-md">
+                        <div class="text-3xl font-bold text-accent mb-2">⭐</div>
+                        <h4 class="text-xl font-semibold text-primary mb-2">Vetted & Trusted Staff</h4>
+                        <p class="text-sm text-gray-600">
+                            All cleaners are background-checked, trained, and fully insured for your peace of mind.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="p-6 bg-blue-50 rounded-lg text-center shadow-md">
+                        <div class="text-3xl font-bold text-accent mb-2">🌿</div>
+                        <h4 class="text-xl font-semibold text-primary mb-2">Eco-Friendly Options</h4>
+                        <p class="text-sm text-gray-600">
+                            We prioritize the use of non-toxic, sustainable cleaning products upon request.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="p-6 bg-blue-50 rounded-lg text-center shadow-md">
+                        <div class="text-3xl font-bold text-accent mb-2">⏱️</div>
+                        <h4 class="text-xl font-semibold text-primary mb-2">Flexible Scheduling</h4>
+                        <p class="text-sm text-gray-600">
+                            Weekly, bi-weekly, monthly, or one-time deep cleans—we work around your life.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div class="p-6 bg-blue-50 rounded-lg text-center shadow-md">
+                        <div class="text-3xl font-bold text-accent mb-2">💯</div>
+                        <h4 class="text-xl font-semibold text-primary mb-2">100% Satisfaction</h4>
+                        <p class="text-sm text-gray-600">
+                            If you're not happy, we'll return and re-clean the area within 24 hours—free of charge.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 3. Get a Quote Modal -->
+    <div id="modal-quote" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeModal('modal-quote')">&times;</span>
+            <section class="py-4">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12">
+                    Get a <span class="text-accent">Free</span> Cleaning Quote
+                </h2>
+                
+                <div class="max-w-xl mx-auto bg-gray-50 p-8 rounded-xl shadow-2xl border-t-4 border-accent">
+                    <!-- FORM USES mailto: FOR DIRECT EMAIL SUBMISSION -->
+                    <form action="mailto:info@blessingsclean.com" method="get" enctype="text/plain">
+                        <div class="mb-4">
+                            <label for="name" class="block text-primary font-semibold mb-2">Your Name</label>
+                            <!-- Added name attribute -->
+                            <input type="text" id="name" name="Name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-accent focus:border-accent transition duration-300" placeholder="John Doe" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-primary font-semibold mb-2">Email Address</label>
+                            <!-- Added name attribute -->
+                            <input type="email" id="email" name="Email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-accent focus:border-accent transition duration-300" placeholder="email@example.com" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="service" class="block text-primary font-semibold mb-2">Desired Service</label>
+                            <!-- Added name attribute -->
+                            <select id="service" name="Desired Service" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-accent focus:border-accent transition duration-300">
+                                <option>Residential Cleaning</option>
+                                <option>Commercial Cleaning</option>
+                                <option>Move-In/Move-Out</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="details" class="block text-primary font-semibold mb-2">Property Size & Details</label>
+                            <!-- Added name attribute -->
+                            <textarea id="details" name="Details" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-accent focus:border-accent transition duration-300" placeholder="e.g., 3 Bed, 2 Bath, Bi-weekly service preference"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-8 py-3 bg-primary text-white text-lg font-bold rounded-lg hover:bg-blue-900 transition duration-300 btn-gold">
+                            Send Request
+                        </button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <!-- 4. Contact Info Modal -->
+    <div id="modal-contact-info" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close-btn" onclick="closeModal('modal-contact-info')">&times;</span>
+            <section class="py-4">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12">
+                    Get in <span class="text-accent">Touch</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                    <!-- Contact Info -->
+                    <div class="p-6 bg-blue-50 rounded-xl shadow-md border-l-4 border-accent">
+                        <h5 class="text-2xl font-semibold mb-4 text-primary">Contact Details</h5>
+                        <ul class="space-y-3 text-lg text-gray-700">
+                            <li>
+                                <strong>Email:</strong> 
+                                <a href="mailto:info@blessingsclean.com" class="hover:text-primary transition duration-300">info@blessingsclean.com</a>
+                            </li>
+                            <li>
+                                <strong>Quick Call:</strong> 
+                                <a href="tel:+233207816778" class="hover:text-primary transition duration-300">(020) 781-6778</a>
+                            </li>
+                            <li>
+                                <strong>WhatsApp:</strong> 
+                                <a href="https://wa.me/233557150062" target="_blank" class="hover:text-primary transition duration-300">0557150062</a>
+                            </li>
+                            <li>
+                                <strong>Address:</strong> 
+                                <span>123 Clean St, Suite 100, City, ST 90210</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Hours -->
+                    <div class="p-6 bg-blue-50 rounded-xl shadow-md border-l-4 border-primary">
+                        <h5 class="text-2xl font-semibold mb-4 text-primary">Operating Hours</h5>
+                        <p class="text-lg text-gray-700">
+                            Our team is available to serve you during the following hours:
+                        </p>
+                        <ul class="mt-3 space-y-2 text-lg font-medium text-gray-700">
+                            <li>Mon - Fri: <span class="float-right text-primary">8:00 AM - 5:00 PM</span></li>
+                            <li>Sat: <span class="float-right text-primary">9:00 AM - 3:00 PM</span></li>
+                            <li>Sun: <span class="float-right text-accent">Closed</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 5. Gallery Modal (Re-added) -->
+    <div id="modal-gallery" class="modal hidden">
+        <div class="modal-content !max-w-7xl">
+            <span class="modal-close-btn" onclick="closeModal('modal-gallery')">&times;</span>
+            <section class="py-4">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-center text-primary mb-12">
+                    Our <span class="text-accent">Sparkling</span> Gallery
+                </h2>
+                
+                <!-- Image Grid for Visual Appeal (18 Images) - all 240x240, shapes maintained -->
+                <div class="mt-8 mx-auto grid grid-cols-3 sm:grid-cols-6 gap-4 opacity-95">
+                    <!-- Row 1: 6 Images - CIRCLE SHAPE -->
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Clean+Home" alt="Clean Home" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 circle-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Shiny+Floor" alt="Shiny Floor" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 circle-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Happy+Client" alt="Happy Client" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 circle-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Supplies" alt="Cleaning Supplies" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 circle-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Tidy+Room" alt="Tidy Room" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 circle-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Fresh+Scent" alt="Fresh Scent" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 circle-clip">
+                    
+                    <!-- Row 2: 6 Images - KITE SHAPE -->
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Tidy+Kitchen" alt="Tidy Kitchen" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 kite-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Clean+Window" alt="Clean Window" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 kite-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Vacuuming" alt="Vacuuming" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 kite-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Dusting" alt="Dusting" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 kite-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Fresh+Linen" alt="Fresh Linen" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 kite-clip">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Sparkle" alt="Sparkling Faucet" class="w-full h-auto object-cover shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300 kite-clip">
+
+                    <!-- Row 3: 6 Images - Rounded Rectangles -->
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Bathroom" alt="Bathroom Cleaning" class="w-full h-auto object-cover rounded-lg shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Office" alt="Office Cleaning" class="w-full h-auto object-cover rounded-lg shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Carpet" alt="Carpet Cleaning" class="w-full h-auto object-cover rounded-lg shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Disinfect" alt="Disinfecting Service" class="w-full h-auto object-cover rounded-lg shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Team" alt="Cleaning Team" class="w-full h-auto object-cover rounded-lg shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300">
+                    <img src="https://placehold.co/240x240/1e40af/ffffff?text=Smile" alt="Satisfied Smile" class="w-full h-auto object-cover rounded-lg shadow-lg border-2 border-accent transform hover:scale-105 transition duration-300">
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+    <!-- Floating WhatsApp Button -->
+    <!-- WhatsApp Number 0557150062 is set in the href below -->
+    <a 
+        id="whatsapp-float" 
+        href="https://wa.me/233557150062?text=Hello%20Blessings%20Cleaning%20Agency.%20I%27d%20like%20to%20get%20a%20quote%20for%20a%20cleaning%20service." 
+        target="_blank" 
+        aria-label="Chat with us on WhatsApp"
+    >
+        <!-- Inline SVG for Chat/WhatsApp icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </a>
+
+    <!-- JavaScript for Modal and Mobile Menu -->
+    <script>
+        // Function to open a specific modal
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                // Ensure the mobile menu is closed when a modal opens
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.classList.add('hidden');
+                
+                // Display the modal
+                modal.classList.remove('hidden');
+                // Optional: Disable scrolling on the body when a modal is open
+                document.body.style.overflow = 'hidden'; 
+            }
+        }
+
+        // Function to close a specific modal
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+                // Re-enable scrolling on the body
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // 1. Mobile Menu Toggle
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // 2. Close mobile menu when a scroll link is clicked (Home is the only scroll link now)
+            mobileMenu.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                         // For scroll links, re-enable smooth scrolling for the transition
+                         document.documentElement.style.scrollBehavior = 'smooth';
+                         // Then revert to auto after a short delay
+                         setTimeout(() => {
+                            document.documentElement.style.scrollBehavior = 'auto';
+                         }, 600);
+                    }
+                });
+            });
+            
+            // 3. Close modal when clicking outside of the modal content
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        closeModal(modal.id);
+                    }
+                });
+            });
+            
+            // 4. Close modal on ESC key press
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        if (!modal.classList.contains('hidden')) {
+                            closeModal(modal.id);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
